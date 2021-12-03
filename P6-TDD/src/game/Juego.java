@@ -9,10 +9,9 @@ package game;
  */
 
 public class Juego {
-	
+
 	private int[][] tablero;
 	private static final int TAMANO_TABLERO = 4;
-
 
 	public Juego() {
 		tablero = new int[TAMANO_TABLERO][TAMANO_TABLERO];
@@ -25,6 +24,7 @@ public class Juego {
 	public void setTablero(int[][] tablero) {
 		this.tablero = tablero;
 	}
+
 	/*
 	 * Método de inicio asociado al requisito 1 donde se implementa la funcionalidad
 	 * básica de posicionar una pieza en el tablero.
@@ -35,13 +35,19 @@ public class Juego {
 	 */
 	public void jugar(int x, int y) {
 		checkLimites(x, y);
-		
+		if (!isCasillaVacia(x, y)) {
+			throw new IllegalArgumentException("Posicion ocupada");
+		}
 
 	}
 
 	private void checkLimites(int x, int y) {
-		if(x>TAMANO_TABLERO || x<=0 || y>TAMANO_TABLERO || y<=0) {
+		if (x > TAMANO_TABLERO || x <= 0 || y > TAMANO_TABLERO || y <= 0) {
 			throw new IllegalArgumentException("Sobrepasado limite del tablero");
 		}
+	}
+
+	private boolean isCasillaVacia(int x, int y) {
+		return tablero[x][y] == 1;
 	}
 }
