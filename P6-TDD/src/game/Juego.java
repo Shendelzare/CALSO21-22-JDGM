@@ -1,6 +1,8 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -19,6 +21,9 @@ public class Juego {
 
 	private JugadoresEnum proximoTurno;
 	private Map<JugadoresEnum, Integer> numeroJugadas;
+
+	private List<Punto> torresNegras = new ArrayList<>();
+	private List<Punto> torresBlancas = new ArrayList<>();;
 
 	public enum JugadoresEnum {
 		BLANCAS, NEGRAS
@@ -68,40 +73,51 @@ public class Juego {
 	 * 
 	 * @param y columna de la casilla en la que se desea indorporar la pieza
 	 */
-	public void jugar(int x, int y) throws IllegalMoveException {
+	public void jugar(int x, int y) {
 		jugar(proximoTurno, x, y);
 	}
 
-	public void jugar(JugadoresEnum jugador, int x, int y) throws IllegalMoveException {
+	public void jugar(JugadoresEnum jugador, int x, int y) {
 		checkLimites(x, y);
 		if (!isCasillaVacia(x, y)) {
 			throw new IllegalMoveException("Posicion ocupada");
 		}
 		checkTurno(jugador);
-		tablero[x][y] = jugador.ordinal();
+
 		restaJugada(jugador);
+		tablero[x][y] = jugador.ordinal();
+
+		if (jugador.equals(JugadoresEnum.BLANCAS)) {
+			torresBlancas.add(new Punto(x, y));
+		} else {
+			torresNegras.add(new Punto(x, y));
+
+		}
+
+	
+
 	}
 
-	private void restaJugada(JugadoresEnum jugador) throws IllegalMoveException  {
-		int jugadasDisponibles =numeroJugadas.get(jugador)-1;
-		if(jugadasDisponibles>0) {
-			jugadasDisponibles-=1;
+	private void restaJugada(JugadoresEnum jugador) {
+		int jugadasDisponibles = numeroJugadas.get(jugador) - 1;
+		if (jugadasDisponibles > 0) {
+			jugadasDisponibles -= 1;
 			numeroJugadas.put(jugador, jugadasDisponibles);
-		}else {
+
+		} else {
 			throw new IllegalMoveException("No quedan jugadas disponilbles jugador ".concat(jugador.toString()));
 		}
-		
-		
+
 	}
 
-	private void checkTurno(JugadoresEnum jugador) throws IllegalMoveException {
+	private void checkTurno(JugadoresEnum jugador) {
 		if (!jugador.equals(proximoTurno)) {
 			throw new IllegalMoveException("No es tu turno :(");
 		}
 
 	}
 
-	private void checkLimites(int x, int y) throws IllegalMoveException {
+	private void checkLimites(int x, int y) {
 		if (x > TAMANO_TABLERO || x <= 0 || y > TAMANO_TABLERO || y <= 0) {
 			throw new IllegalMoveException("Sobrepasado limite del tablero");
 		}
@@ -117,5 +133,38 @@ public class Juego {
 
 	public void setProximoTurno(JugadoresEnum proximoTurno) {
 		this.proximoTurno = proximoTurno;
+	}
+
+	public boolean existenAmenazas() {
+
+		if (!(numeroJugadas.get(JugadoresEnum.NEGRAS) == 0 && numeroJugadas.get(JugadoresEnum.BLANCAS) == 0)) {
+			throw new GameInProgressException("Aun quedan movimientos pendientes");
+		}
+		for (Punto estePunto : torresBlancas) {
+			for (Punto otroPunto : torresNegras) {
+				if (estePunto.getPosicionX() == otroPunto.getPosicionX()
+						|| estePunto.getPosicionY() == otroPunto.getPosicionY()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public List<Punto> getTorresNegras() {
+		return torresNegras;
+	}
+
+	public void setTorresNegras(List<Punto> torresNegras) {
+		this.torresNegras = torresNegras;
+	}
+
+	public List<Punto> getTorresBlancas() {
+		return torresBlancas;
+	}
+
+	public void setTorresBlancas(List<Punto> torresBlancas) {
+		this.torresBlancas = torresBlancas;
 	}
 }
