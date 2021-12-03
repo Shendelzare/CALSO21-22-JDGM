@@ -48,6 +48,7 @@ public class JuegoTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testIsCasillaVacia() {
 		juego.jugar(3, 1);
+		juego.jugar(JugadoresEnum.NEGRAS,3, 1);
 	}
 
 	@Test
