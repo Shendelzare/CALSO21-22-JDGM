@@ -87,12 +87,12 @@ public class JuegoTest {
 		juego.jugar(2, 1);
 	}
 	
-	public void existenAmenazas() {
+	public void existenAmenazasTest() {
 		AssertTrue(juego.existenAmenazas());
 	}
 	
 	@Test(expected = GameInProfressException.class)
-	public void existenAmenazas() {
+	public void existenAmenazasTest1() {
 		AssertTrue(juego.existenAmenazas());
 	}
 	
