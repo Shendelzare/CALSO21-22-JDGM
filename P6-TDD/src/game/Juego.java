@@ -13,17 +13,19 @@ public class Juego {
 	private int[][] tablero;
 	private static final int TAMANO_TABLERO = 4;
 	private JugadoresEnum proximoTurno;
-	
-	public enum JugadoresEnum{BLANCAS,NEGRAS}
+
+	public enum JugadoresEnum {
+		BLANCAS, NEGRAS
+	}
 
 	public Juego() {
 		this(JugadoresEnum.BLANCAS);
 	}
-	
+
 	public Juego(JugadoresEnum turno) {
 		tablero = new int[TAMANO_TABLERO][TAMANO_TABLERO];
 		setProximoTurno(turno);
-	
+
 	}
 
 	public int[][] getTablero() {
@@ -43,22 +45,23 @@ public class Juego {
 	 * @param y columna de la casilla en la que se desea indorporar la pieza
 	 */
 	public void jugar(int x, int y) {
-		jugar(proximoTurno, x,  y);
+		jugar(proximoTurno, x, y);
 	}
-	public void jugar(JugadoresEnum jugador, int x, int y ) {
+
+	public void jugar(JugadoresEnum jugador, int x, int y) {
 		checkLimites(x, y);
 		if (!isCasillaVacia(x, y)) {
 			throw new IllegalArgumentException("Posicion ocupada");
 		}
 		checkTurno(jugador);
-		tablero[x][y]=jugador.ordinal();
+		tablero[x][y] = jugador.ordinal();
 	}
 
 	private void checkTurno(JugadoresEnum jugador) {
-		if(!jugador.equals(proximoTurno)) {
+		if (!jugador.equals(proximoTurno)) {
 			throw new IllegalArgumentException("No es tu turno :(");
 		}
-		
+
 	}
 
 	private void checkLimites(int x, int y) {
@@ -68,7 +71,7 @@ public class Juego {
 	}
 
 	private boolean isCasillaVacia(int x, int y) {
-		return tablero[x][y] == 0;
+		return tablero[x][y] == -1;
 	}
 
 	public JugadoresEnum getProximoTurno() {
