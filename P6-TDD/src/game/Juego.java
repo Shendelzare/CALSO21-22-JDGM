@@ -34,6 +34,9 @@ public class Juego {
 	 * @param y columna de la casilla en la que se desea indorporar la pieza
 	 */
 	public void jugar(int x, int y) {
+		if(x>TAMANO_TABLERO) {
+			throw new IllegalArgumentException("Sobrepasado limite del tablero");
+		}
 
 	}
 
