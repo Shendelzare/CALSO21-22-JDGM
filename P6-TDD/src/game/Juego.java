@@ -35,7 +35,7 @@ public class Juego {
 	 */
 	public void jugar(int x, int y) {
 		checkLimites(x, y);
-		if (!isCasillaVacia(x, y)) {
+		if (isCasillaVacia(x, y)) {
 			throw new IllegalArgumentException("Posicion ocupada");
 		}
 
@@ -48,6 +48,6 @@ public class Juego {
 	}
 
 	private boolean isCasillaVacia(int x, int y) {
-		return tablero[x][y] == 1;
+		return tablero[x][y] == 0;
 	}
 }
