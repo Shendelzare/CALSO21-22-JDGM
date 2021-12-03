@@ -25,7 +25,17 @@ public class Juego {
 	public Juego(JugadoresEnum turno) {
 		tablero = new int[TAMANO_TABLERO][TAMANO_TABLERO];
 		setProximoTurno(turno);
+		inicializaTablero();
+	}
 
+	private void inicializaTablero() {
+		for(int i =0;i<TAMANO_TABLERO;i++) {
+			for(int j =0;j<TAMANO_TABLERO;j++) {
+				tablero[i][j]=-1;
+				
+			}
+		}
+		
 	}
 
 	public int[][] getTablero() {
