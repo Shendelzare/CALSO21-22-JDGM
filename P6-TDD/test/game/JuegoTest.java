@@ -25,28 +25,28 @@ public class JuegoTest {
 		assertNotNull(juego.getTablero());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testPosicionarFueraTableroArriba() {
+	@Test(expected = IllegalMoveException.class)
+	public void testPosicionarFueraTableroArriba() throws IllegalMoveException {
 		juego.jugar(1, 5);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testPosicionarFueraTableroAbajo() {
+	@Test(expected = IllegalMoveException.class)
+	public void testPosicionarFueraTableroAbajo() throws IllegalMoveException {
 		juego.jugar(1, 0);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testPosicionarFueraTableroDerecha() {
+	@Test(expected = IllegalMoveException.class)
+	public void testPosicionarFueraTableroDerecha() throws IllegalMoveException {
 		juego.jugar(5, 1);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testPosicionarFueraTableroIzquierda() {
+	@Test(expected = IllegalMoveException.class)
+	public void testPosicionarFueraTableroIzquierda() throws IllegalMoveException {
 		juego.jugar(0, 1);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testIsCasillaVacia() {
+	@Test(expected = IllegalMoveException.class)
+	public void testIsCasillaVacia() throws IllegalMoveException {
 		juego.jugar(3, 1);
 		juego.jugar(JugadoresEnum.NEGRAS,3, 1);
 	}
@@ -56,30 +56,30 @@ public class JuegoTest {
 		juego = new Juego(JugadoresEnum.BLANCAS);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void jugarNegras() {
+	@Test(expected = IllegalMoveException.class)
+	public void jugarNegras() throws IllegalMoveException {
 		juego = new Juego(JugadoresEnum.BLANCAS);
 		juego.jugar(JugadoresEnum.NEGRAS, 2, 3);
 	}
 
 	@Test
-	public void jugarNegras1() {
+	public void jugarNegras1() throws IllegalMoveException {
 		juego = new Juego(JugadoresEnum.NEGRAS);
 		juego.jugar(JugadoresEnum.NEGRAS, 2, 3);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void jugarBlancas() {
+	@Test(expected = IllegalMoveException.class)
+	public void jugarBlancas() throws IllegalMoveException {
 		juego = new Juego(JugadoresEnum.NEGRAS);
 		juego.jugar(JugadoresEnum.BLANCAS, 2, 3);
 	}
 
 	@Test
-	public void jugarBlancas1() {
+	public void jugarBlancas1() throws IllegalMoveException {
 		juego.jugar(JugadoresEnum.BLANCAS, 2, 3);
 	}
-	@Test(expected = IllegalArgumentException.class)
-	public void superarTorresPermitidas() {
+	@Test(expected = IllegalMoveException.class)
+	public void superarTorresPermitidas() throws IllegalMoveException {
 		juego.jugar(1, 1);
 		juego.jugar(1, 2);
 		juego.jugar(1, 3);

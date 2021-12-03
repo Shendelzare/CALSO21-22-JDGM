@@ -1,5 +1,8 @@
 package game;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Clase Juego tiene la responsabilidad de ofrecer las funcionalidades básicas del juego de tablero descrito en
  * el enunciado de la práctica. Inicialmente no se implementa funcionalidad alguna y el estado de la programación de la clase es inicial
@@ -12,7 +15,10 @@ public class Juego {
 
 	private int[][] tablero;
 	private static final int TAMANO_TABLERO = 4;
+	private static final int JUGADAS_DISPONIBLES = 2;
+
 	private JugadoresEnum proximoTurno;
+	private Map<JugadoresEnum, Integer> numeroJugadas;
 
 	public enum JugadoresEnum {
 		BLANCAS, NEGRAS
@@ -26,16 +32,24 @@ public class Juego {
 		tablero = new int[TAMANO_TABLERO][TAMANO_TABLERO];
 		setProximoTurno(turno);
 		inicializaTablero();
+		inicializaJugadas();
+	}
+
+	private void inicializaJugadas() {
+		numeroJugadas = new HashMap<>();
+		numeroJugadas.put(JugadoresEnum.BLANCAS, JUGADAS_DISPONIBLES);
+		numeroJugadas.put(JugadoresEnum.NEGRAS, JUGADAS_DISPONIBLES);
+
 	}
 
 	private void inicializaTablero() {
-		for(int i =0;i<TAMANO_TABLERO;i++) {
-			for(int j =0;j<TAMANO_TABLERO;j++) {
-				tablero[i][j]=-1;
-				
+		for (int i = 0; i < TAMANO_TABLERO; i++) {
+			for (int j = 0; j < TAMANO_TABLERO; j++) {
+				tablero[i][j] = -1;
+
 			}
 		}
-		
+
 	}
 
 	public int[][] getTablero() {
@@ -54,29 +68,42 @@ public class Juego {
 	 * 
 	 * @param y columna de la casilla en la que se desea indorporar la pieza
 	 */
-	public void jugar(int x, int y) {
+	public void jugar(int x, int y) throws IllegalMoveException {
 		jugar(proximoTurno, x, y);
 	}
 
-	public void jugar(JugadoresEnum jugador, int x, int y) {
+	public void jugar(JugadoresEnum jugador, int x, int y) throws IllegalMoveException {
 		checkLimites(x, y);
 		if (!isCasillaVacia(x, y)) {
-			throw new IllegalArgumentException("Posicion ocupada");
+			throw new IllegalMoveException("Posicion ocupada");
 		}
 		checkTurno(jugador);
 		tablero[x][y] = jugador.ordinal();
+		restaJugada(jugador);
 	}
 
-	private void checkTurno(JugadoresEnum jugador) {
+	private void restaJugada(JugadoresEnum jugador) throws IllegalMoveException  {
+		int jugadasDisponibles =numeroJugadas.get(jugador)-1;
+		if(jugadasDisponibles>0) {
+			jugadasDisponibles-=1;
+			numeroJugadas.put(jugador, jugadasDisponibles);
+		}else {
+			throw new IllegalMoveException("No quedan jugadas disponilbles jugador ".concat(jugador.toString()));
+		}
+		
+		
+	}
+
+	private void checkTurno(JugadoresEnum jugador) throws IllegalMoveException {
 		if (!jugador.equals(proximoTurno)) {
-			throw new IllegalArgumentException("No es tu turno :(");
+			throw new IllegalMoveException("No es tu turno :(");
 		}
 
 	}
 
-	private void checkLimites(int x, int y) {
+	private void checkLimites(int x, int y) throws IllegalMoveException {
 		if (x > TAMANO_TABLERO || x <= 0 || y > TAMANO_TABLERO || y <= 0) {
-			throw new IllegalArgumentException("Sobrepasado limite del tablero");
+			throw new IllegalMoveException("Sobrepasado limite del tablero");
 		}
 	}
 
