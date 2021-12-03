@@ -1,9 +1,11 @@
 package game;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import game.Juego.JugadoresEnum;
 
 public class JuegoTest {
 

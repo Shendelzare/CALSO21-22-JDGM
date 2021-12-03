@@ -12,9 +12,18 @@ public class Juego {
 
 	private int[][] tablero;
 	private static final int TAMANO_TABLERO = 4;
+	private JugadoresEnum proximoTurno;
+	
+	public enum JugadoresEnum{BLANCAS,NEGRAS}
 
 	public Juego() {
 		tablero = new int[TAMANO_TABLERO][TAMANO_TABLERO];
+	}
+	
+	public Juego(JugadoresEnum turno) {
+		this();
+		setProximoTurno(turno);
+	
 	}
 
 	public int[][] getTablero() {
@@ -49,5 +58,13 @@ public class Juego {
 
 	private boolean isCasillaVacia(int x, int y) {
 		return tablero[x][y] == 0;
+	}
+
+	public JugadoresEnum getProximoTurno() {
+		return proximoTurno;
+	}
+
+	public void setProximoTurno(JugadoresEnum proximoTurno) {
+		this.proximoTurno = proximoTurno;
 	}
 }
