@@ -17,11 +17,11 @@ public class Juego {
 	public enum JugadoresEnum{BLANCAS,NEGRAS}
 
 	public Juego() {
-		tablero = new int[TAMANO_TABLERO][TAMANO_TABLERO];
+		this(JugadoresEnum.BLANCAS);
 	}
 	
 	public Juego(JugadoresEnum turno) {
-		this();
+		tablero = new int[TAMANO_TABLERO][TAMANO_TABLERO];
 		setProximoTurno(turno);
 	
 	}
@@ -43,11 +43,22 @@ public class Juego {
 	 * @param y columna de la casilla en la que se desea indorporar la pieza
 	 */
 	public void jugar(int x, int y) {
+		jugar(proximoTurno, x,  y);
+	}
+	public void jugar(JugadoresEnum jugador, int x, int y ) {
 		checkLimites(x, y);
-		if (isCasillaVacia(x, y)) {
+		if (!isCasillaVacia(x, y)) {
 			throw new IllegalArgumentException("Posicion ocupada");
 		}
+		checkTurno(jugador);
+		tablero[x][y]=jugador.ordinal();
+	}
 
+	private void checkTurno(JugadoresEnum jugador) {
+		if(!jugador.equals(proximoTurno)) {
+			throw new IllegalArgumentException("No es tu turno :(");
+		}
+		
 	}
 
 	private void checkLimites(int x, int y) {
