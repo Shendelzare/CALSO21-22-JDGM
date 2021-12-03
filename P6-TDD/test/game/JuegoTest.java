@@ -64,6 +64,7 @@ public class JuegoTest {
 
 	@Test
 	public void jugarNegras1() {
+		juego = new Juego(JugadoresEnum.NEGRAS);
 		juego.jugar(JugadoresEnum.NEGRAS, 2, 3);
 	}
 
