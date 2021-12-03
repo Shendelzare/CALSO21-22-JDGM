@@ -57,6 +57,7 @@ public class JuegoTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void jugarNegras() {
+		juego = new Juego(JugadoresEnum.BLANCAS);
 		juego.jugar(JugadoresEnum.NEGRAS, 2, 3);
 	}
 
@@ -67,6 +68,7 @@ public class JuegoTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void jugarBlancas() {
+		juego = new Juego(JugadoresEnum.NEGRAS);
 		juego.jugar(JugadoresEnum.BLANCAS, 2, 3);
 	}
 
