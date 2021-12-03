@@ -1,0 +1,2 @@
+# CALSO21-22-JDGM
+Practica 7 CALSO
