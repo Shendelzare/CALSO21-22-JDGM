@@ -78,4 +78,12 @@ public class JuegoTest {
 	public void jugarBlancas1() {
 		juego.jugar(JugadoresEnum.BLANCAS, 2, 3);
 	}
+	@Test(expected = IllegalArgumentException.class)
+	public void superarTorresPermitidas() {
+		juego.jugar(1, 1);
+		juego.jugar(1, 2);
+		juego.jugar(1, 3);
+		juego.jugar(1, 4);
+		juego.jugar(2, 1);
+	}
 }
